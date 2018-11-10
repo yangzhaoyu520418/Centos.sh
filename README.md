@@ -1,1 +1,1 @@
-#.sh
+#Centos.sh
