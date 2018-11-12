@@ -2,6 +2,12 @@
 # author for yangzhaoyu 2018.11.10
 # use install LAMP and LNMP scrips
 
+
+
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
 date_number=`date +%Y%m%d`
 cpu_cores=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk -F: '{print $2}'`
 Mentotal_number=`cat /proc/meminfo | grep MemTota|awk -F: '{print $2}'`
@@ -27,6 +33,7 @@ EOF
 install_function(){
 local LAMP="./LAMP.sh"
 local LNMP="./LNMP.sh"
+local uninstall="./uninstall"
 read -p "Please input the number you want to select(1-4):" num1
 if [ ! -n "`echo $num1 | sed 's/[0-9]//g'`"  ]; then
 	if [ $num1 -gt 0 ] && [ $num1 -le 4 ]	;then
@@ -49,6 +56,11 @@ if [ ! -n "`echo $num1 | sed 's/[0-9]//g'`"  ]; then
 				;;
 			3)
 				echo -e "\033[35m 1)Uninstall all installed !!! please writing installation\033[0m"
+				if [ -s "$uninstall" ]; then
+					source $uninstall
+				else 
+					exit 1
+				if
 				;;
 			4)			
 				echo -e "\033[35m 1)No installation and exit !!! exit installation\033[0m"

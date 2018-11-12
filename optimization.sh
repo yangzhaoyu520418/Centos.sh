@@ -2,6 +2,11 @@
 # author yangzhaoyu 2018.11.9
 # use CentOS 6.x and CentOS 7.x 
 
+
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
+
 # Search for network card location
 FILES=`find /etc -name ifcfg-e* -print`
 network_dir=`find /etc -name ifcfg-e* -print | awk -F/ '{print $5}'`
@@ -198,13 +203,13 @@ fi
 firewalld_selinux(){
 
 if [ "$Edition_number" == "7"  ];then
-	systemctl stop firewalld
-	systemctl disable firewalld
+	systemctl stop firewalld 2&>/dev/null
+	systemctl disable firewalld 2&>/dev/null
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
 	setenforce 0
 elif [ "$Edition_number" == "6" ];then
-	service iptables stop
-	chkconfig iptables off
+	service iptables stop 2&>/dev/null
+	chkconfig iptables off 2&>/dev/null
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
 	setenforce 0 
 	
