@@ -22,7 +22,6 @@ if [ ! -n "`echo $num1 | sed 's/[0-9]//g'`"  ]; then
 		case $num1 in 
 			1)
 				echo -e "\033[35m 1)Start installing LNMP !!! please writing installation\033[0m"
-				echo ""
 				;;
 			2)
 				echo -e "\033[35m 1)Start installing LAMP !!! please writing installation\033[0m"
