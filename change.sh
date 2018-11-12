@@ -25,16 +25,27 @@ EOF
 }
 
 install_function(){
+local LAMP="./LAMP.sh"
+local LNMP="./LNMP.sh"
 read -p "Please input the number you want to select(1-4):" num1
 if [ ! -n "`echo $num1 | sed 's/[0-9]//g'`"  ]; then
 	if [ $num1 -gt 0 ] && [ $num1 -le 4 ]	;then
 		case $num1 in 
 			1)
 				echo -e "\033[35m 1)Start installing LNMP !!! please writing installation\033[0m"
-				source ./LAMP.sh
+				if [ -s "$LNMP" ]; then
+					source $LNMP
+				else
+					exit 1
+				fi 
 				;;
 			2)
 				echo -e "\033[35m 1)Start installing LAMP !!! please writing installation\033[0m"
+				if [ -s "$LAMP" ]; then
+					source $LAMP
+				else 
+					exit 1
+				fi
 				;;
 			3)
 				echo -e "\033[35m 1)Uninstall all installed !!! please writing installation\033[0m"
