@@ -1,6 +1,15 @@
 #!/bin/bash
-#author for yangzhaoyu 2018.11.10
+# author for yangzhaoyu 2018.11.10
 # use install LAMP and LNMP scrips
+
+date_number=`date +%Y%m%d`
+cpu_cores=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk -F: '{print $2}'`
+Mentotal_number=`cat /proc/meminfo | grep MemTota|awk -F: '{print $2}'`
+echo "#############To configure##############"
+echo "DATA 	 :        $date_number"
+echo "CPU	 :        $cpu_cores"
+echo "MEN	 :$Mentotal_number"
+echo "#######################################"
 
 Selection_menu(){
 	cat << EOF
@@ -22,6 +31,7 @@ if [ ! -n "`echo $num1 | sed 's/[0-9]//g'`"  ]; then
 		case $num1 in 
 			1)
 				echo -e "\033[35m 1)Start installing LNMP !!! please writing installation\033[0m"
+				source ./LAMP.sh
 				;;
 			2)
 				echo -e "\033[35m 1)Start installing LAMP !!! please writing installation\033[0m"
