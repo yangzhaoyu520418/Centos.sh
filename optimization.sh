@@ -7,10 +7,8 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
-# Search for network card location
 FILES=`find /etc -name ifcfg-e* -print`
 network_dir=`find /etc -name ifcfg-e* -print | awk -F/ '{print $5}'`
-# Search system version number
 Edition_number=$(rpm -q --qf "%{VERSION}" $(rpm -q --whatprovides redhat-release) )
 platform=`uname -i`
 type=`cat /etc/redhat-release | awk '{print $1}'`
