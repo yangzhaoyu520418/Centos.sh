@@ -11,6 +11,7 @@ load_config(){
 	openssl_localtion=/usr/local/openssl
 	deoends_prefix=/usr/local
 	web_root_dir=/data/www/default
+
 	download_root_dir="https://dl.lamp.sg.files"
 	parallel_compile=1
 	#nghttp2
@@ -56,7 +57,68 @@ load_config(){
 	kod_version=$(wget --no-check-certificate -qO- https://api.github.com/repos/kalcaddle/kodfile/releases/latest | grep 'tag_name' | cut -d\" -f4)
 	[ -z "$kod_version"  ] && kod_version="4.35"
 	set_hint ${kodexplorer_filename} "kodexplorer-${kod_version}"
-	 
+	
+apache_arr=(
+	${apache2_4_filename}
+	do_not_install
+	)
+
+acpache_modules_arr=(
+	${mod_wsgi_filename}
+	${mod_security_filename}
+	${mod_jk_filename}
+	do_not_install
+)
+
+mysql_arr=(
+	${mysql5_5_filename}
+	${mysql5_6_filename}
+	${mysql5_7_filename}
+	${mysql8_0_filename}
+	${mariadb5_5_filename}
+	${mariadb10_0_filename}
+	${mariadb10_1_filename}
+	${mariadb10_2_filename}
+	${mariadb10_3_filename}
+	${percona5_5_filename}
+	${percona5_6_filename}
+	${percona5_7_filename}
+	do_not_install
+)
+
+php_arr=(
+	${php5_6_filename}
+	${php7_0_filename}
+	${php7_1_filename}
+	${php7_2_filename}
+	do_not_install
+)
+
+phpmyadmin_arr=(
+	${phpmyadmin_filename}
+	do_not_install
+)
+
+kodexplorer_arr=(
+	${kodexplorer_filename}
+	do_not_install
+)
+
+php_modules_arr=(
+	${ionCube_filename}
+	${xcache_filename}
+	${php_imagemagick_filename}
+	${php_graphicsmagick_filename}
+	${php_memcached_filename}
+	${php_redis_filename}
+	${php_mongo_filename}
+	${php_libsodium_filename}
+	${swoole_filename}
+	${xdebug_filename}
+	do_not_install
+)
+
 }
+
 
 
