@@ -152,7 +152,7 @@ fi
 
 kernel_modify(){
 	read -p "please input Maximum number of open file descriptions:(102400)" max_number
-	if [ ! -z "max_number"  ] || [ "$maxx_number" -gt 0 ]; then
+	if [ ! -z "${max_number}"  ] || [ "${max_number}" -gt 0 ]; then
 		echo "ulmit -SHn $max_number" >> /etc/rc.local
 	else 
 		echo "error you input $max_number is not int"
@@ -164,8 +164,8 @@ cat >> /etc/security/limits.conf << EOF
 * 		hard 	nofile		655350
 EOF
 
-sysctl=`cat /etc/sysctl.conf | wc -l`
-if [ "$sysctl" -le "10" ]; then
+local sysctl=`cat /etc/sysctl.conf | wc -l`
+if [ "${sysctl}" -le "10" ]; then
 cat >> /etc/sysctl.conf << EOF
 # 禁用ipv6服务
 net.ipv6.conf.all.disable_ipv6=1
@@ -226,9 +226,9 @@ echo "Wait for the 30 Temple and start....."
 echo "If you have error please  Ctrl+C End this script."
 echo "Warnning!!! Some parameters have been written dead."
 echo "#############To configure##############"
-echo "DATA 	 :        $date_number"
-echo "CPU	 :        $cpu_cores"
-echo "MEN	 :$Mentotal_number"
+echo "DATA 	 :        ${date_number}"
+echo "CPU	 :        ${cpu_cores}"
+echo "MEN	 :${Mentotal_number}"
 echo "#######################################"
 type_platform
 echo "starting..... and writing....."
@@ -241,7 +241,7 @@ kernel_modify
 install_Software
 echo "###################################Do you want to restart the computer?###################################"
 read -p "y/Y or n/N:" change
-case $change in 
+case ${change} in 
 y|Y)
 	echo "please writing 10s reboot computer!!!"
 	sleep10
