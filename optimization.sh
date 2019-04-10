@@ -244,7 +244,7 @@ read -p "y/Y or n/N:" change
 case ${change} in 
 y|Y)
 	echo "please writing 10s reboot computer!!!"
-	sleep10
+	sleep 10
 	reboot
 	;;
 N|n)

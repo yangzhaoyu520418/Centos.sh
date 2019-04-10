@@ -43,3 +43,6 @@ git_opsy(){
 	[ -f /etc/lsb-release ] && awk -F'[="]' '/DESCRIPTION/{print $2}' /etc/lsb-release && return
 }
 
+get_os_info(){
+	cname=`awk -F: 'model name/ {name=$2}' END {print name}  `
+}
