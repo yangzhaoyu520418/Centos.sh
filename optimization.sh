@@ -60,7 +60,7 @@ elif [ "$Edition_number" == "6" ]; then
 		exit
 	fi 
 else 
-	echo "You type don't know"
+	echo "You type don\'t know"
 	exit 1
 fi
 
@@ -103,7 +103,7 @@ echo "stop install"
 }
 
 date_sync(){ 
-if [ "$Edition_number" == "7" ]; then
+if [ "${Edition_number}" == "7" ]; then
 	yum -y install ntp 2&>/dev/null
 	rm -rf /etc/localtime 
 	ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
@@ -115,7 +115,7 @@ if [ "$Edition_number" == "7" ]; then
 	systemctl enable ntpd 2&>/dev/null
 	echo "/usr/sbin/ntpdate ntp1.aliyun.com > /dev/null 2>&1; /sbin/hwclock -w" >> /etc/rc.d/rc.local
 	echo "0 */1 * * * ntp1.aliyun.com >/dev/null 2>&1; /sbin/hwclock -w" >> /var/spool/cron/root
-elif [ "$Edition_number" == "6" ]; then
+elif [ "${Edition_number}" == "6" ]; then
 	yum -y install ntp 2&> /dev/null
 	rm -rf /etc/localtime
 	ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
@@ -134,28 +134,28 @@ fi
 }
 	
 dns_modify(){
-if [ "$Edition_number" == "7" ]; then
+if [ "${Edition_number}" == "7" ]; then
 #	sed -i '/nameserver/d' /etc/resolv.conf
 	echo "DNS1=8.8.8.8" >> $FILES
 	echo "DNS2=8.8.4.4" >> $FILES
 	systemctl restart network 2&>/dev/null
-elif [ "$Edition_number" == "6" ]; then
+elif [ "${Edition_number}" == "6" ]; then
 #	sed -i '/nameserver/d' /etc/resolv.conf
 	echo "DNS1=8.8.8.8" >> $FILES
 	echo "DNS2=8.8.4.4" >> $FILES
 	/etc/init.d/network restart 2>&1 /dev/null	
 else
-	echo "I don't know type"
+	echo "I don\'t know type"
 	exit 0
 fi
 }
 
 kernel_modify(){
 	read -p "please input Maximum number of open file descriptions:(102400)" max_number
-	if [ ! -z "${max_number}"  ] || [ "${max_number}" -gt 0 ]; then
-		echo "ulmit -SHn $max_number" >> /etc/rc.local
+	if [ ! -z "${max_number}"  ] || [ "${max_number}" -gt "0" ]; then
+		echo "ulmit -SHn ${max_number}" >> /etc/rc.local
 	else 
-		echo "error you input $max_number is not int"
+		echo "error you input ${max_number} is not int"
 		echo "Qing is manually generated after script completion."
 	fi
 	
@@ -198,19 +198,18 @@ else
 	echo "Already written"
 fi		
 }
-firewalld_selinux(){
 
-if [ "$Edition_number" == "7"  ];then
+firewalld_selinux(){
+if [ "${Edition_number}" == "7"  ];then
 	systemctl stop firewalld 2&>/dev/null
 	systemctl disable firewalld 2&>/dev/null
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
 	setenforce 0
-elif [ "$Edition_number" == "6" ];then
+elif [ "${Edition_number}" == "6" ];then
 	service iptables stop 2&>/dev/null
 	chkconfig iptables off 2&>/dev/null
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
-	setenforce 0 
-	
+	setenforce 0 	
 else 
 	echo "exit"
 	exit 0
