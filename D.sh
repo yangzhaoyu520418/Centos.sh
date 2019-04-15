@@ -1,7 +1,8 @@
 #!/bin/bash
 
 while read line;do
-        a=`echo "${line}" | awk -F'http' '{print $1}'|sed 's/[[:space:]]//g'`
+{        
+	a=`echo "${line}" | awk -F'http' '{print $1}'|sed 's/[[:space:]]//g'`
         i=`echo "$a" |  awk -F'[/]+' '{print $4$5$6$7$8}'`
         b=`echo "${line}" | awk -F'http' '{print $2}'|sed 's/[[:space:]]//g'`
         c=`echo "${line}" | awk -F'/' '{print $2}'| sed 's/[[:space:]]//g'`
@@ -28,5 +29,6 @@ while read line;do
         #else
         #       echo "Space" | tree 3.txt
         #fi
-
+}&
 done < $1
+wait

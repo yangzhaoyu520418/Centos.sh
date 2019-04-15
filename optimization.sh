@@ -87,8 +87,8 @@ yum makecache 2&>/dev/null
 
 install_Software(){
 read -p "you want tp install soft please input:[] or eixt please input null:" soft
-yum -y install net-tools 2&>/dev/null
-yum -y install gcc-c++ gcc 2$>/dev/null
+#yum -y install net-tools 2&>/dev/null
+yum -y install gcc-c++ gcc unzip vim-enhanced unrar sysstat net-tools 2$>/dev/null
 while [ ! -z "$soft"  ]; do
         yum -y install $sofe 2&> /dev/null
         Succes=`echo $?`
@@ -193,7 +193,7 @@ net.ipv4.tcp_synack_retries=2
 #启用 sysrq功能
 kernel.sysrq=1
 EOF
-sysctl -p
+sysctl -p >>/dev/null
 else 
 	echo "Already written"
 fi		
