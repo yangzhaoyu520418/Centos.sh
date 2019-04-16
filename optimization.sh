@@ -237,6 +237,7 @@ dns_modify
 yum_modify
 date_sync
 kernel_modify
+firewalld_selinux
 install_Software
 echo "###################################Do you want to restart the computer?###################################"
 read -p "y/Y or n/N:" change
