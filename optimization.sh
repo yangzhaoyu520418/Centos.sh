@@ -201,13 +201,13 @@ fi
 
 firewalld_selinux(){
 if [ "${Edition_number}" == "7"  ];then
-	systemctl stop firewalld 2&>/dev/null
-	systemctl disable firewalld 2&>/dev/null
+	systemctl stop firewalld >/dev/null 2>&1 &
+	systemctl disable firewalld >/dev/null 2>&1 &
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
 	setenforce 0
 elif [ "${Edition_number}" == "6" ];then
-	service iptables stop 2&>/dev/null
-	chkconfig iptables off 2&>/dev/null
+	service iptables stop 2>/dev/null 2>&1 &
+	chkconfig iptables off 2>/dev/null 2>&1 &
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
 	setenforce 0 	
 else 
