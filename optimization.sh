@@ -87,8 +87,8 @@ yum makecache 2&>/dev/null
 
 install_Software(){
 read -p "you want tp install soft please input: or eixt please input null:" soft
-yum -y install  python-pip python-devel make openssl-devel 2&>/dev/null
-yum -y install gcc-c++ gcc unzip vim-enhanced unrar sysstat net-tools 2$>/dev/null
+yum -y install  python-pip python-devel make openssl-devel >/dev/null 2>&1
+yum -y install gcc-c++ gcc unzip vim-enhanced unrar sysstat net-tools >/dev/null 2>&1
 while [ ! -z "$soft"  ]; do
         yum -y install $sofe 2&> /dev/null
         Succes=`echo $?`
