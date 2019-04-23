@@ -70,14 +70,14 @@ yum_modify(){
 if [ "$Edition_number" == "7" ]; then
 	mv $yum_source/CentOS-Base.repo $backup_dir/CentOS-Base.repo.bak 2&>/dev/null
 	yum install -y wget 2&>/dev/null
-	wget -O $yum_dir $yum_url 2&>/dev/null
-	wget -O $epel_dir $epel_url 2&>/dev/null
+	wget -O $yum_dir $yum_url 2&> /dev/null
+	wget -O $epel_dir $epel_url 2&> /dev/null
 	echo "Success"
 elif [ "$Edition_number" == "6" ]; then
 	mv $yum_source/CentOS-Base.repo $backup_dir/CentOS-Base.repo.bak 2&>/dev/null
-	yum install -y wget 2&>/dev/null
-	wget -O $yum_dir $yum_url 2&>/dev/null
-	wget -O $epel_dir $epel_url 2&>/dev/null
+	yum install -y wget 2&> /dev/null
+	wget -O $yum_dir $yum_url 2&> /dev/null
+	wget -O $epel_dir $epel_url 2&> /dev/null
 	echo "Success"
 else 
 	echo "error exit script error!!"
@@ -203,13 +203,11 @@ firewalld_selinux(){
 if [ "${Edition_number}" == "7"  ];then
 	systemctl stop firewalld >/dev/null 2>&1 &
 	systemctl disable firewalld >/dev/null 2>&1 &
-	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
-	setenforce 0
+	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
 elif [ "${Edition_number}" == "6" ];then
 	service iptables stop 2>/dev/null 2>&1 &
 	chkconfig iptables off 2>/dev/null 2>&1 &
 	sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
-	setenforce 0 	
 else 
 	echo "exit"
 	exit 0
