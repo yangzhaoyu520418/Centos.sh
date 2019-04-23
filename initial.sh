@@ -10,7 +10,7 @@ case "$1" in
 	start)
 		echo "Start LVS of DirectorServer"
 		ifconfig ens36:0 $VIP broadcast $VIP netmask 255.255.255.255
-		route add -host $VIP dev ens36:0
+		route add -host $VIP dev ens33:0
 		echo "1" > /proc/sys/net/ipv4/ip_forward
 		ipvsadm -C
 		ipvsadm -A -t $VIP:80 -s wrr -p 120
@@ -22,7 +22,7 @@ case "$1" in
 		echo "close LVS Directorserver"
 		echo "0" > /proc/sys/net/ipv4/ip_forward
 		ipvsadm -C
-		ifconfig ens36:0 down
+		ifconfig ens33:0 down
 		;;
 	*)
 		echo "Usage: $0 {start|stop}"
