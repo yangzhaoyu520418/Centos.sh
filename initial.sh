@@ -9,7 +9,7 @@ logger $0 called with $1
 case "$1" in
 	start)
 		echo "Start LVS of DirectorServer"
-		ifconfig ens3e:0 $VIP broadcast $VIP netmask 255.255.255.255 up
+		ifconfig ens33:0 $VIP broadcast $VIP netmask 255.255.255.255 up
 		route add -host $VIP dev ens33:0
 		echo "1" > /proc/sys/net/ipv4/ip_forward
 		ipvsadm -C
