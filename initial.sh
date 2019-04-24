@@ -1,15 +1,15 @@
 #!/bin/bash
 
-VIP=172.16.3.140
-RIP1=172.16.3.133
-RIP2=172.16.3.134
+VIP=192.168.10.10
+RIP1=192.168.10.170
+RIP2=192.168.10.171
 . /etc/rc.d/init.d/functions
 
 logger $0 called with $1
 case "$1" in
 	start)
 		echo "Start LVS of DirectorServer"
-		ifconfig ens36:0 $VIP broadcast $VIP netmask 255.255.255.255
+		ifconfig ens3e:0 $VIP broadcast $VIP netmask 255.255.255.255 up
 		route add -host $VIP dev ens33:0
 		echo "1" > /proc/sys/net/ipv4/ip_forward
 		ipvsadm -C
