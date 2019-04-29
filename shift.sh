@@ -2,7 +2,7 @@
 
 for i in `seq 1 101`;do
 {
-	curl http://shop.zhibo.tv > /dev/null 2>&1
+	curl  > /dev/null 2>&1
 	#sleep 3
 	echo "start"
 }&
