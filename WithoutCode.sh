@@ -42,16 +42,13 @@ existUserName(){
 }
 
 createUserName(){
-        echo "Create User username:${USER} filedir:/home/${user}"
+        echo "Create User username:${USER} filedir:/home/${USER}"
         useradd -g Develop ${USER} 
 }
 
 addKeyUsers(){
 		local USER=$1
-        local y
-        for y in "${NAME[@]}"; do
-                [ -f "/home/${USER}/.ssh/id_rsa" ] && [ -f "/home/${USER}/.ssh/id_rsa.pub" ] && echo "The $USER has key" 
-        done
+        [ -f "/home/${USER}/.ssh/id_rsa" ] && [ -f "/home/${USER}/.ssh/id_rsa.pub" ] && echo "The $USER has key" && return 0 || return 1 
 }
 
 createUserSsh(){
@@ -85,7 +82,7 @@ createuser_main(){
                 exit 1
         else
                 echo "Starting create username"
-                creatUserName
+                createUserName
                 echo "SUCCEEDFUL!!"
         fi
 }
@@ -99,6 +96,11 @@ createssh_main(){
 			exit 1
 		fi
 		addKeyUsers $1
+		if [ "$?" == 0 ]; then
+			echo "ok The key is exist"
+			exit
+		else
+			echo "the Key is not exist"
 		createUserSsh
 }
 
