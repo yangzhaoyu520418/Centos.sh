@@ -2,38 +2,129 @@
 # author:yangzhaoyu  time:20190505
 # Newly added users add private login
 # In root use
-# usage ./WithoutCode.sh usename
+# usage ./WithoutCode.sh username
 # usename == what you need to create, if username inexistence so create use and Create a private login 
 # private login in /home/{user}/.ssh/ please to the person who created it
-
-
-NAME=[`ls /home/ | tr '\n' ' '`]
-USER="$1"
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
-rootness(){
+NAME=[`ls /home/ | tr '\n' ' '`]
+NAMENUMBER=${#NAME[@]}
+GROUP=[`cat /etc/group | awk -F":" '{print $1}' | tr '\n' ' '`]
+#PARAMETER="$1"
+
+rootNess(){
     if [[ ${EUID} -ne 0 ]]; then
        log "Error" "This script must be run as root"
        exit 1
     fi
 }
 
-getUserName(){
-        local x
-        for x in ${NAME[@]}; do
-                if [ "${x}" == "${USER}" ]; then
-                         echo "OK the user nonentity"
-                         break 
-                else
-                        echo "NO the user exist"
-                        echo "Check if there is a directory with private login"
-                fi 
-        done
-        wait
-        return 10
+userVersion(){
+        echo "Version:0.1"
 }
 
-rootness
-getUserName
+#addUserHelp(){
+
+#}
+
+existUserName(){
+        if test -z "$1"; then
+                 USER=" "
+                 echo "User name is not null !"
+                 echo "please ./WithoutCode.sh username"
+                 exit 1
+        else
+                 USER="$1"
+        fi
+        echo "${NAME[@]}" | grep -wq "${USER}" &&  return 0 || return 1
+}
+
+createUserName(){
+        echo "Create User username:${USER} filedir:/home/${user}"
+        useradd -g Develop ${USER} 
+}
+
+addKeyUsers(){
+        local y
+        for y in "${NAME[@]}"; do
+                su $y
+                [ -f "~/.ssh/id_rsa" ] && [ -f "~/.ssh/id_rsa.pub" ] && echo "The $USER has key" || createUserSsh
+        done
+}
+
+createUserSsh(){
+        su ${USER}
+        read -p "please keypasswd:" KEYPASSWD
+        while :;do
+                [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/id_rsa > /dev/null  && break  ||  {
+                read -p "please keypasswd is not null please input again:" KEYPASSWD && continue
+                }
+        done
+		exit
+                
+}
+
+
+
+createuserssh_main(){
+        if [ "$?" == 0 ]; then
+                echo "Please replace the user that needs to be created !!!"
+                exit 1
+        else
+                echo "Starting create username"
+                creatUserName
+                createUserSsh
+                echo "SUCCEEDFUL!!"
+        fi
+}
+
+createuser_main(){
+        if [ "$?" == 0 ]; then
+                echo "Please replace the user that needs to be created !!!"
+                exit 1
+        else
+                echo "Starting create username"
+                creatUserName
+                echo "SUCCEEDFUL!!"
+        fi
+}
+
+rootNess
+while [[ $# -gt 0 ]]; do
+        case "$1" in
+        -h|--help)
+                addUserHelp
+                exit 1
+                ;;
+        -v|--version)
+                userVersion
+                exit 1
+                ;;
+        -c|--createuserssh)
+                shift
+                existUserName $1
+                createuserssh_main 
+                ;;
+        -d|--deleteuserssh)
+                shift
+                ;;
+        -G|--creategroup)
+                shift
+                ;;
+        -S|--createssh)
+                addKeyUsers
+                ;;
+        -U|--useradd)
+                shift
+                existUserName $1
+                createuser_main
+                ;;
+        *)
+                echo "Unknow argument: $1"
+                exit 1
+                ;;
+        esac
+shift
+done
