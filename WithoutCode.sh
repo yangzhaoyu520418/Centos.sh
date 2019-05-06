@@ -13,6 +13,9 @@ NAME=[`ls /home/ | tr '\n' ' '`]
 NAMENUMBER=${#NAME[@]}
 GROUP=[`cat /etc/group | awk -F":" '{print $1}' | tr '\n' ' '`]
 #PARAMETER="$1"
+addUserHelp(){
+	
+}
 
 rootNess(){
     if [[ ${EUID} -ne 0 ]]; then
@@ -25,83 +28,80 @@ userVersion(){
         echo "Version:0.1"
 }
 
-#addUserHelp(){
-
-#}
-
 existUserName(){
-        if test -z "$1"; then
-                 USER=" "
-                 echo "User name is not null !"
-                 echo "please ./WithoutCode.sh username"
-                 exit 1
-        else
-                 USER="$1"
-        fi
-        echo "${NAME[@]}" | grep -wq "${USER}" &&  return 0 || return 1
+    if test -z "$1"; then
+        USER=" "
+        echo "User name is not null !"
+        echo "please ./WithoutCode.sh username"
+        exit 1
+    else
+        USER="$1"
+    fi
+    echo "${NAME[@]}" | grep -wq "${USER}" &&  return 0 || return 1
 }
 
 createUserName(){
-        echo "Create User username:${USER} filedir:/home/${USER}"
-        useradd -g Develop ${USER} 
+    echo "Create User username:${USER} filedir:/home/${USER}"
+    useradd -g Develop ${USER} 
 }
 
 addKeyUsers(){
-		local USER=$1
-        [ -f "/home/${USER}/.ssh/id_rsa" ] && [ -f "/home/${USER}/.ssh/id_rsa.pub" ] && echo "The $USER has key" && return 0 || return 1 
+	local USER=$1
+    [ -f "/home/${USER}/.ssh/id_rsa" ] && [ -f "/home/${USER}/.ssh/id_rsa.pub" ]  && return 0 || return 1 
 }
 
 createUserSsh(){
-        read -sp "please keypasswd:" KEYPASSWD
-        while :;do
-                [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/id_rsa > /dev/null"  && echo "OK!!" && break  ||  {
-                read -p "please keypasswd is not null please input again:" KEYPASSWD && continue
-                }
-        done
-		exit
+    read -sp "please keypasswd:" KEYPASSWD
+    while :;do
+            [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/id_rsa > /dev/null"  && echo "OK!!" && break  ||  {
+			read -p "please keypasswd is not null please input again:" KEYPASSWD && continue
+            }
+    done
+	exit
                 
 }
 
 
 
 createuserssh_main(){
-        if [ "$?" == 0 ]; then
-                echo "Please replace the user that needs to be created !!!"
-                exit 1
-        else
-                echo "Starting create username"
-                createUserName
-                createUserSsh
-                echo "SUCCEEDFUL!!"
-        fi
+    if [ "$?" == 0 ]; then
+            echo "Please replace the user that needs to be created !!!"
+            exit 1
+    else
+            echo "Starting create username"
+            createUserName
+            createUserSsh
+            echo "SUCCEEDFUL!!"
+    fi
 }
 
 createuser_main(){
-        if [ "$?" == 0 ]; then
-                echo "Please replace the user that needs to be created !!!"
-                exit 1
-        else
-                echo "Starting create username"
-                createUserName
-                echo "SUCCEEDFUL!!"
-        fi
+    if [ "$?" == 0 ]; then
+            echo "Please replace the user that needs to be created !!!"
+            exit 1
+    else
+            echo "Starting create username\n"
+            createUserName
+            echo "SUCCEEDFUL!!"
+    fi
 }
 
 createssh_main(){
-		existUserName $1
-		if [ "$?" == 0 ]; then
-			echo "ok The user is exist"
-		else
-			echo "The user is not exist"
-			exit 1
-		fi
-		addKeyUsers $1
-		if [ "$?" == 0 ]; then
-			echo "ok The key is exist"
-			exit
-		else
-			echo "the Key is not exist"
-		createUserSsh
+	existUserName $1
+	if [ "$?" == 0 ]; then
+		echo "ok The user is exist"
+	else
+		echo "The user is not exist"
+		exit 1
+	fi
+	addKeyUsers $1
+	if [ "$?" == 0 ]; then
+		echo "ok The key is exist"
+		exit 1
+	else
+		echo "the Key is not exist"
+	fi
+	createUserSsh
 }
 
 rootNess
