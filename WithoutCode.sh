@@ -50,12 +50,12 @@ addKeyUsers(){
         local y
         for y in "${NAME[@]}"; do
                 su $y
-                [ -f "~/.ssh/id_rsa" ] && [ -f "~/.ssh/id_rsa.pub" ] && echo "The $USER has key" || createUserSsh
+                [ -f "~/.ssh/id_rsa" ] && [ -f "~/.ssh/id_rsa.pub" ] && echo "The $USER has key"
         done
 }
 
 createUserSsh(){
-        su ${USER}
+		su $USER
         read -p "please keypasswd:" KEYPASSWD
         while :;do
                 [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/id_rsa > /dev/null  && break  ||  {
@@ -74,7 +74,7 @@ createuserssh_main(){
                 exit 1
         else
                 echo "Starting create username"
-                creatUserName
+                createUserName
                 createUserSsh
                 echo "SUCCEEDFUL!!"
         fi
