@@ -47,16 +47,17 @@ createUserName(){
 }
 
 addKeyUsers(){
+		local USER=$1
         local y
         for y in "${NAME[@]}"; do
-                [ -f "/home/${USER}/.ssh/id_rsa" ] && [ -f "/home/${USER}/.ssh/id_rsa.pub" ] && echo "The $USER has key"
+                [ -f "/home/${USER}/.ssh/id_rsa" ] && [ -f "/home/${USER}/.ssh/id_rsa.pub" ] && echo "The $USER has key" 
         done
 }
 
 createUserSsh(){
-        read -p "please keypasswd:" KEYPASSWD
+        read -sp "please keypasswd:" KEYPASSWD
         while :;do
-                [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/id_rsa > /dev/null"  -${USER} && break  ||  {
+                [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/id_rsa > /dev/null"  && echo "OK!!" && break  ||  {
                 read -p "please keypasswd is not null please input again:" KEYPASSWD && continue
                 }
         done
@@ -89,6 +90,18 @@ createuser_main(){
         fi
 }
 
+createssh_main(){
+		existUserName $1
+		if [ "$?" == 0 ]; then
+			echo "ok The user is exist"
+		else
+			echo "The user is not exist"
+			exit 1
+		fi
+		addKeyUsers $1
+		createUserSsh
+}
+
 rootNess
 while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -112,7 +125,8 @@ while [[ $# -gt 0 ]]; do
                 shift
                 ;;
         -S|--createssh)
-                addKeyUsers
+				shift
+                createssh_main $1
                 ;;
         -U|--useradd)
                 shift
