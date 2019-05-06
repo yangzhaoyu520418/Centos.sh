@@ -13,9 +13,9 @@ NAME=[`ls /home/ | tr '\n' ' '`]
 NAMENUMBER=${#NAME[@]}
 GROUP=[`cat /etc/group | awk -F":" '{print $1}' | tr '\n' ' '`]
 #PARAMETER="$1"
-addUserHelp(){
+#addUserHelp(){
 	
-}
+#}
 
 rootNess(){
     if [[ ${EUID} -ne 0 ]]; then
