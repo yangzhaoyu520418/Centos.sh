@@ -63,7 +63,7 @@ createUserSsh(){
     echo
     while :;do 
         [  -n "${KEYPASSWD}"  ]  || {
-		echo "please keypasswd is not null"  &&  read -rsp "please keypasswd:\n" KEYPASSWD && echo && read -rsp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
+		echo "please keypasswd is not null"  &&  read -rsp "please keypasswd:" KEYPASSWD && echo && read -rsp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
 	}
 	[ -n "${AGKEYPASSWD}" ] || {
 		echo "please keypasswd is not null"  &&  read -sp "please keypasswd:" KEYPASSWD && echo && read -sp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
