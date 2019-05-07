@@ -2,7 +2,6 @@
 # author:yangzhaoyu  time:20190505
 # Newly added users add private login
 # In root use
-# usage ./WithoutCode.sh username
 # usename == what you need to create, if username inexistence so create use and Create a private login 
 # private login in /home/{user}/.ssh/ please to the person who created it
 
@@ -13,9 +12,15 @@ NAME=[`ls /home/ | tr '\n' ' '`]
 NAMENUMBER=${#NAME[@]}
 GROUP=[`cat /etc/group | awk -F":" '{print $1}' | tr '\n' ' '`]
 #PARAMETER="$1"
-#addUserHelp(){
-	
-#}
+addUserHelp(){
+		echo "./WithoutCode.sh --help| -h "
+		echo "./WithoutCode.sh --version | -v"
+		echo "./WithoutCode.sh --createuserssh|-c"
+		echo "./WithoutCode.sh --deleteuserssh|-d"
+		echo "./WithoutCode.sh --creategroup|-G"
+		echo "./WithoutCode.sh --createssh|-S"
+		echo "./WithoutCode.sh --useradd|-U"
+}
 
 rootNess(){
     if [[ ${EUID} -ne 0 ]]; then
@@ -61,6 +66,11 @@ createUserSsh(){
                 
 }
 
+delUserSsh(){
+	local USER=$1
+	local PASSWD=[`cat /etc/group | awk -F":" '{print $1}' | tr '\n' ' '`]
+	echo "${PASSWD[@]}" | grep -wq "${USER}" &&  return 0 || return 1 
+}
 
 
 createuserssh_main(){
@@ -104,6 +114,20 @@ createssh_main(){
 	createUserSsh
 }
 
+deleteuserssh_main(){
+	delUserSsh $1
+	local USER=$1
+	if [ "$?" == 0 ]; then
+		echo "The user is exist"
+		echo "Starting remove user"
+		[ -d "/home/${USER}" ] && rm -rf /home/${USER} && userdel ${USER}|| userdel ${USER}
+		echo "remove ${USER} SUCCEEDFUL"
+	else
+		echo "The user is not exist Unable to delete"
+		exit 1
+	fi
+}
+
 rootNess
 while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -122,6 +146,7 @@ while [[ $# -gt 0 ]]; do
                 ;;
         -d|--deleteuserssh)
                 shift
+				deleteuserssh_main $1
                 ;;
         -G|--creategroup)
                 shift
