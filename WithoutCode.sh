@@ -66,7 +66,7 @@ createUserSsh(){
 		echo "please keypasswd is not null"  &&  read -rsp "please keypasswd:" KEYPASSWD && echo && read -rsp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
 	}
 	[ -n "${AGKEYPASSWD}" ] || {
-		echo "please keypasswd is not null"  &&  read -sp "please keypasswd:" KEYPASSWD && echo && read -sp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
+		echo "please again Keypasswd is not null"  &&  read -sp "please keypasswd:" KEYPASSWD && echo && read -sp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
 	}	
        	[ "${KEYPASSWD}" == "${AGKEYPASSWD}"  ] || {
 		echo "If there is a mistake in the password entered twice, please re-enter it." && read -sp "please keypasswd:" KEYPASSWD && echo  && read -sp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue
