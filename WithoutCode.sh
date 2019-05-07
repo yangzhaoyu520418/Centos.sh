@@ -31,7 +31,7 @@ rootNess(){
 }
 
 userVersion(){
-        echo "Version:0.1"
+        echo "Version:0.2"
 }
 
 existUserName(){
