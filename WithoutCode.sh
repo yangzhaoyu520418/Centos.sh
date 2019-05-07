@@ -53,7 +53,7 @@ addKeyUsers(){
 createUserSsh(){
     read -sp "please keypasswd:" KEYPASSWD
     while :;do
-            [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/id_rsa > /dev/null"  && echo "OK!!" && break  ||  {
+            [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/${USER} > /dev/null"  && echo "OK!!" && break  ||  {
 			read -p "please keypasswd is not null please input again:" KEYPASSWD && continue
             }
     done
