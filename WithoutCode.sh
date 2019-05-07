@@ -47,13 +47,13 @@ createUserName(){
 
 addKeyUsers(){
 	local USER=$1
-    [ -f "/home/${USER}/.ssh/id_rsa" ] && [ -f "/home/${USER}/.ssh/id_rsa.pub" ]  && return 0 || return 1 
+    [ -f "/home/${USER}/.ssh/${USER}" ] && [ -f "/home/${USER}/.ssh/${USER}.pub" ]  && return 0 || return 1 
 }
 
 createUserSsh(){
     read -sp "please keypasswd:" KEYPASSWD
     while :;do
-            [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/${USER} > /dev/null"  && echo "OK!!" && break  ||  {
+            [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/${USER} > /dev/null && cat ~/.ssh/${USER}.pub > ~/.ssh/authorized_keys"  && echo "OK!!" && break  ||  {
 			read -p "please keypasswd is not null please input again:" KEYPASSWD && continue
             }
     done
