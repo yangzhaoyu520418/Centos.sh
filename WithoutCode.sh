@@ -17,7 +17,8 @@ addUserHelp(){
 		echo "./WithoutCode.sh --version | -v"
 		echo "./WithoutCode.sh --createuserssh|-c"
 		echo "./WithoutCode.sh --deleteuserssh|-d"
-		echo "./WithoutCode.sh --creategroup|-G"
+		#echo "./WithoutCode.sh --creategroup|-G"
+		#echo "./WithoutCode.sh --delgroup|-g"
 		echo "./WithoutCode.sh --createssh|-S"
 		echo "./WithoutCode.sh --useradd|-U"
 }
@@ -151,6 +152,9 @@ while [[ $# -gt 0 ]]; do
         -G|--creategroup)
                 shift
                 ;;
+		-g|--delgroup)
+				shift
+				;;
         -S|--createssh)
 				shift
                 createssh_main $1
