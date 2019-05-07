@@ -153,10 +153,10 @@ while [[ $# -gt 0 ]]; do
                 shift
                 ;;
 		-g|--delgroup)
-				shift
-				;;
+		shift
+		;;
         -S|--createssh)
-				shift
+		shift
                 createssh_main $1
                 ;;
         -U|--useradd)
