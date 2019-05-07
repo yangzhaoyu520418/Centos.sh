@@ -58,13 +58,11 @@ addKeyUsers(){
 
 createUserSsh(){
     read -sp "please keypasswd:" KEYPASSWD
-    while :;do
-            [  -n "$KEYPASSWD"  ] && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/${USER} > /dev/null && cat ~/.ssh/${USER}.pub > ~/.ssh/authorized_keys"  && echo "OK!!" && break  ||  {
-			read -p "please keypasswd is not null please input again:" KEYPASSWD && continue
-            }
+    read -sp "Please input Keypasswd again:" AGKEYPASSWD
+    while :;do 
+        [  -n "$KEYPASSWD"  ]  || read -sp "please keypasswd is not null please input again:" KEYPASSWD && continue && [ -n "${AGKEYPASSWD}" ] && [ "${KEYPASSWD}" == "${AGKEYPASSWD}"  ] || echo "If there is a mistake in the password entered twice, please re-enter it." && read -sp "please keypasswd:" KEYPASSWD && read -sp "Please input Keypasswd again:" AGKEYPASSWD && continue && echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/${USER} > /dev/null && cat ~/.ssh/${USER}.pub > ~/.ssh/authorized_keys"  && echo "OK!!" && break   
     done
-	exit
-                
+    exit
 }
 
 delUserSsh(){
