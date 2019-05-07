@@ -58,16 +58,18 @@ addKeyUsers(){
 
 createUserSsh(){
     read -sp "please keypasswd:" KEYPASSWD
+    echo
     read -sp "Please input Keypasswd again:" AGKEYPASSWD
+    echo
     while :;do 
         [  -n "${KEYPASSWD}"  ]  || {
-		echo "please keypasswd is not null"  &&  read -sp "please keypasswd:" KEYPASSWD && read -sp "Please input Keypasswd again:" AGKEYPASSWD && continue 
+		echo "please keypasswd is not null"  &&  read -rsp "please keypasswd:\n" KEYPASSWD && echo && read -rsp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
 	}
 	[ -n "${AGKEYPASSWD}" ] || {
-		echo "please keypasswd is not null"  &&  read -sp "please keypasswd:" KEYPASSWD && read -sp "Please input Keypasswd again:" AGKEYPASSWD && continue 
+		echo "please keypasswd is not null"  &&  read -sp "please keypasswd:" KEYPASSWD && echo && read -sp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue 
 	}	
        	[ "${KEYPASSWD}" == "${AGKEYPASSWD}"  ] || {
-		echo "If there is a mistake in the password entered twice, please re-enter it." && read -sp "please keypasswd:" KEYPASSWD && read -sp "Please input Keypasswd again:" AGKEYPASSWD && continue
+		echo "If there is a mistake in the password entered twice, please re-enter it." && read -sp "please keypasswd:" KEYPASSWD && echo  && read -sp "Please input Keypasswd again:" AGKEYPASSWD && echo && continue
 	}
        	echo "Starting create secret key" &&  su ${USER} -c "ssh-keygen -t rsa -P '$KEYPASSWD' -f ~/.ssh/${USER} > /dev/null && cat ~/.ssh/${USER}.pub > ~/.ssh/authorized_keys"  && echo "OK!!" && break   
     done
