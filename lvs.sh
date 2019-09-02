@@ -20,7 +20,7 @@ service_ad(){
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config 2>&1 /dev/null
         cat >> /etc/sysctl.conf <<-EOF
         net.ipv4.ip_forward = 1
-        EOF
+	EOF
         sysctl -p > /dev/null
 }
 
