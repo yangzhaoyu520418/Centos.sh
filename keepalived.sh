@@ -32,15 +32,15 @@ install_Keepalived(){
 	local KEEPALIVED_ETC="/etc/keepalived"
 	[ -f ${WGET_DIR} ] || yum -y install wget >> /dev/null
 	[ -d ${KEEPALIVED_DIR}  ] || mkdir -p ${KEEPALIVED_DIR}
-	wget -p ${KEEPALIVED_URL} ${KEEPALIVED_DIR}
+	wget -p  ${KEEPALIVED_DIR} ${KEEPALIVED_URL}
 	tar xf ${KEEPALIVED_DIR}/${KEEPALIVED_URL##*/} -C ${KEEPALIVED_DIR}/
 	rm -rf ${KEEPALIVED_DIR}/${KEEPALIVED_URL##*/}
 	KEEP_DIR=`ls ${KEEPALIVED_DIR}`
-	cd ${KEEPALIVED_DIR}/${KEEP_DIR} ; ./configure --profix=/usr/local/keepalived ; make && make install 
-	[ $? -eq 0 ] && echo "The keepalive is installtion" || echo "The Keepalived is not installtion" && exit 1
+	cd ${KEEPALIVED_DIR}/${KEEP_DIR} ; ./configure --prefix=/usr/local/keepalived ; make && make install
 	cp ${KEEPALIVED_DIR}/${KEEP_DIR}/keepalived/etc/init.d/keepalived /etc/init.d/
-	cp  /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/
+	cp /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/
 	cp ${KEEPALIVED_DIR}/${KEEP_DIR}/keepalived/etc/sysconfig/keepalived /etc/sysconfig/keepalived
+	[ $? -eq 0 ] && echo "The keepalive is installtion" || echo "The Keepalived is not installtion" && exit 1
 }
 
 rootNess
