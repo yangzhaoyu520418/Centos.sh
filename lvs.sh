@@ -38,8 +38,9 @@ install_Lvs(){
         ln -s /usr/src/kernels/`uname -r` /usr/src/linux
         IPVSADM_DIR=`echo ${LVS_URL##*/} | awk -F'.' '{print $1"."$2}'`
         cd ${LVS_DIR}/${IPVSADM_DIR}/ ; make && make install
-        modprobe ip_vs && modprobe ip_vs_wrr
+        modprobe -r ip_vs_wrr && modprobe -r ip_vs
 	echo "options ip_vs conn_tab_bits=20" > /etc/modprobe.d/lvs.conf
+	modprobe ip_vs && modprobe ip_vs_wrr
         [ ${IPVS_STATUS_NUMBER} -eq 0 ] && echo "The ipvs is not installtion" && exit 1 || {
             echo "The ipvs in installtion!!"
         }
