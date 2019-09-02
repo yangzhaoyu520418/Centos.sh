@@ -4,7 +4,7 @@
 
 # To determine the user
 rootNess(){
-        [ ${UID} -eq 0 ] && return 0 || return 0 && echo "You user is not root" && exit 1
+        [ ${UID} -eq 0 ] && return 0 || return 1 && echo "You user is not root" && exit 1
 }
 
 # Yum installtion
