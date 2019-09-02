@@ -38,6 +38,9 @@ install_Keepalived(){
 	KEEP_DIR=`ls ${KEEPALIVED_DIR}`
 	cd ${KEEPALIVED_DIR}/${KEEP_DIR} ; ./configure --profix=/usr/local/keepalived ; make && make install 
 	[ $? -eq 0 ] && echo "The keepalive is installtion" || echo "The Keepalived is not installtion" && exit 1
+	cp ${KEEPALIVED_DIR}/${KEEP_DIR}/keepalived/etc/init.d/keepalived /etc/init.d/
+	cp  /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/
+	cp ${KEEPALIVED_DIR}/${KEEP_DIR}/keepalived/etc/sysconfig/keepalived /etc/sysconfig/keepalived
 }
 
 rootNess
