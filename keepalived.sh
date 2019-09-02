@@ -32,6 +32,7 @@ install_Keepalived(){
 	local KEEPALIVED_ETC="/etc/keepalived"
 	[ -f ${WGET_DIR} ] || yum -y install wget >> /dev/null
 	[ -d ${KEEPALIVED_DIR}  ] || mkdir -p ${KEEPALIVED_DIR}
+	[ -d ${KEEPALIVED_ETC}  ] || mkdir -p ${KEEPALIVED_ETC}
 	wget ${KEEPALIVED_URL} -P ${KEEPALIVED_DIR}
 	tar xf ${KEEPALIVED_DIR}/${KEEPALIVED_URL##*/} -C ${KEEPALIVED_DIR}/
 	rm -rf ${KEEPALIVED_DIR}/${KEEPALIVED_URL##*/}
