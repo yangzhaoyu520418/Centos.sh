@@ -30,6 +30,7 @@ install_Keepalived(){
 	local WGET_DIR="/usr/bin/wget" 
 	local KEEPALIVED_DIR="/soft/keepalived"
 	local KEEPALIVED_ETC="/etc/keepalived"
+	local KEEP_DIR
 	[ -f ${WGET_DIR} ] || yum -y install wget >> /dev/null
 	[ -d ${KEEPALIVED_DIR}  ] || mkdir -p ${KEEPALIVED_DIR}
 	[ -d ${KEEPALIVED_ETC}  ] || mkdir -p ${KEEPALIVED_ETC}

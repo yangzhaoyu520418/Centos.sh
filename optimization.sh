@@ -159,44 +159,44 @@ kernel_modify(){
 		echo "Qing is manually generated after script completion."
 	fi
 	
-cat >> /etc/security/limits.conf << EOF
-*		soft 	nofile		655350
-* 		hard 	nofile		655350
-EOF
+	cat >> /etc/security/limits.conf <<-EOF
+	*		soft 	nofile		655350
+	* 		hard 	nofile		655350
+	EOF
 
-local sysctl=`cat /etc/sysctl.conf | wc -l`
-if [ "${sysctl}" -le "10" ]; then
-cat >> /etc/sysctl.conf << EOF
-# 禁用ipv6服务
-net.ipv6.conf.all.disable_ipv6=1
-net.ipv6.conf.default.disable_ipv6=1
-net.ipv6.conf.lo.disable_ipv6=1
-# 取消掉swap不使用交换内存
-vm.swappiness=0
-# 决定检查过期多久的邻居条目
-net.ipv4.neigh.default.gc_stale_time=120
-# 关闭反向路径查询
-net.ipv4.conf.all.rp_filter=0
-net.ipv4.conf.default.rp_filter=0
-#防止arp广播
-net.ipv4.conf.lo.arp_announce=2
-net.ipv4.conf.all.arp_announce=2
-net.ipv4.conf.default.arp_announce=2
-# time-work等待时间数量最大为5000
-net.ipv4.tcp_max_tw_buckets=5000
-# 增强抵御syn flood攻击
-net.ipv4.tcp_syncookies=1
-# syn列队的长度为1024
-net.ipv4.tcp_max_syn_backlog=1024
-# 减少syn重新连接的次数
-net.ipv4.tcp_synack_retries=2
-#启用 sysrq功能
-kernel.sysrq=1
-EOF
-sysctl -p >>/dev/null
-else 
-	echo "Already written"
-fi		
+	local sysctl=`cat /etc/sysctl.conf | wc -l`
+	if [ "${sysctl}" -le "10" ]; then
+		cat >> /etc/sysctl.conf <<-EOF
+		# 禁用ipv6服务
+		net.ipv6.conf.all.disable_ipv6=1
+		net.ipv6.conf.default.disable_ipv6=1
+		net.ipv6.conf.lo.disable_ipv6=1
+		# 取消掉swap不使用交换内存
+		vm.swappiness=0
+		# 决定检查过期多久的邻居条目
+		net.ipv4.neigh.default.gc_stale_time=120
+		# 关闭反向路径查询
+		net.ipv4.conf.all.rp_filter=0
+		net.ipv4.conf.default.rp_filter=0
+		#防止arp广播
+		net.ipv4.conf.lo.arp_announce=2
+		net.ipv4.conf.all.arp_announce=2
+		net.ipv4.conf.default.arp_announce=2
+		# time-work等待时间数量最大为5000
+		net.ipv4.tcp_max_tw_buckets=5000
+		# 增强抵御syn flood攻击
+		net.ipv4.tcp_syncookies=1
+		# syn列队的长度为1024
+		net.ipv4.tcp_max_syn_backlog=1024
+		# 减少syn重新连接的次数
+		net.ipv4.tcp_synack_retries=2
+		# 启用 sysrq功能
+		kernel.sysrq=1
+		EOF
+		sysctl -p >>/dev/null
+	else 
+		echo "Already written"
+	fi		
 }
 
 firewalld_selinux(){
