@@ -46,8 +46,8 @@ install_Lvs(){
         modprobe -r ip_vs_wrr && modprobe -r ip_vs_rr && modprobe -r ip_vs
 	echo "options ip_vs conn_tab_bits=20" > /etc/modprobe.d/lvs.conf
 	modprobe ip_vs && modprobe ip_vs_wrr && modprobe ip_vs_rr
-        [ ${IPVS_STATUS_NUMBER} -eq 0 ] && echo "The ipvs is not installtion" && exit 1 || {
-            echo "The ipvs in installtion!!"
+        [ ${IPVS_STATUS_NUMBER} -eq 0 ] && echo "The ipvs is installtion" || {
+            echo "The ipvs in not installtion!!" && exit 1 
         }
 }
 
