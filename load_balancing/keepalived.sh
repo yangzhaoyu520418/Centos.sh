@@ -5,14 +5,14 @@
 # To determine the user
 rootNess(){
 	echo "Detecting root users !!"
-	[ ${UID} -eq 0 ]  && return 0 || return 1 && echo "You user is not root" && exit 1
+	[ ${UID} -eq 0 ]  && echo "OK!!" &&return 0 || return 1 && echo "You user is not root" && exit 1
 }
 
 # Yum installtion
 yum_Ist(){
 	echo "Start install system environmental science"
 	yum -y install gcc gc gcc-c++ libnl libnl-devel libnfnetlink-devel openssl openssl-devel > /dev/null
-	[ $? -eq 0 ] && return 0 || return 1 && echo "You please installtion sort" && exit 1
+	[ $? -eq 0 ] && echo "OK!!" &&return 0 || return 1 && echo "You please installtion sort" && exit 1
 }
 
 # service adjustment
@@ -24,7 +24,8 @@ service_ad(){
 	cat >> /etc/sysctl.conf <<-EOF
 	net.ipv4.ip_forward = 1
 	EOF
-       	sysctl -p > /dev/null	
+       	sysctl -p > /dev/null
+	echo "OK!!"	
 }
 
 # Install the Keepakived
@@ -43,7 +44,7 @@ install_Keepalived(){
 	tar xf ${KEEPALIVED_DIR}/${KEEPALIVED_URL##*/} -C ${KEEPALIVED_DIR}/
 	rm -rf ${KEEPALIVED_DIR}/${KEEPALIVED_URL##*/}
 	KEEP_DIR=`ls ${KEEPALIVED_DIR}`
-	cd ${KEEPALIVED_DIR}/${KEEP_DIR} ; ./configure --prefix=/usr/local/keepalived >> /dev/null ; make && make install > /dev/null
+	cd ${KEEPALIVED_DIR}/${KEEP_DIR} ; ./configure --prefix=/usr/local/keepalived >> /dev/null ; make >> /dev/null && make install > /dev/null
 	cp ${KEEPALIVED_DIR}/${KEEP_DIR}/keepalived/etc/init.d/keepalived /etc/init.d/
 	cp /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/
 	cp ${KEEPALIVED_DIR}/${KEEP_DIR}/keepalived/etc/sysconfig/keepalived /etc/sysconfig/keepalived
