@@ -1,4 +1,6 @@
 #!/bin/bash
+# author: yangzhaoyu time: 2019-09-04
+# used: nginxPid is or is not exist
 
 while :; do
 	nginxPidNumber=`ps -C nginx --no-header | wc -l`
