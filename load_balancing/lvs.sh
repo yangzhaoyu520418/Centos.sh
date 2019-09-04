@@ -29,6 +29,6 @@ install_Lvs(){
 }
 
 rootNess
-yum_Ist
+yum_Ist $0
 service_ad
 install_Lvs

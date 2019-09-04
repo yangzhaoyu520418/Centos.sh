@@ -29,7 +29,7 @@ install_Keepalived(){
 }
 
 rootNess
-yum_Ist
+yum_Ist $0
 service_ad
 install_Keepalived
 
