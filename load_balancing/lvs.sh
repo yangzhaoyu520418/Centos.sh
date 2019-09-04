@@ -10,10 +10,8 @@ install_Lvs(){
 	echo "Start installation Lvs"
         local IPVSADM_DIR
         local LVS_URL="https://mirrors.edge.kernel.org/pub/linux/utils/kernel/ipvsadm/ipvsadm-1.30.tar.xz"
-        local WGET_DIR="/usr/bin/wget"
         local LVS_DIR="/soft/lvs"
         local IPVS_STATUS_NUMBER=`lsmod | grep ip_vs | wc -l`
-        [ -f "${WGET_DIR}" ] || yum -y install wget >> /dev/null
         [ -d "${LVS_DIR}" ] || mkdir -p ${LVS_DIR}
         wget -P ${LVS_DIR} ${LVS_URL} >> /dev/null
         tar Jxf ${LVS_DIR}/${LVS_URL##*/} -C ${LVS_DIR}

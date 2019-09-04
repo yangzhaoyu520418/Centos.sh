@@ -9,12 +9,10 @@
 install_Keepalived(){
 	echo "Start installation Keepalived"
 	local KEEPALIVED_URL="https://www.keepalived.org/software/keepalived-2.0.18.tar.gz"
-	local WGET_DIR="/usr/bin/wget" 
 	local KEEPALIVED_DIR="/soft/keepalived"
 	local KEEPALIVED_ETC="/etc/keepalived"
 	local KEEP_DIR
 	local KEEP_PREFIX="/usr/local/keepalived"
-	[ -f ${WGET_DIR} ] || yum -y install wget >> /dev/null
 	[ -d ${KEEPALIVED_DIR}  ] || mkdir -p ${KEEPALIVED_DIR}
 	[ -d ${KEEPALIVED_ETC}  ] || mkdir -p ${KEEPALIVED_ETC}
 	wget ${KEEPALIVED_URL} -P ${KEEPALIVED_DIR} >> /dev/null
