@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # author: yangzhaoyu time:2019-09-03
-# used: heartbeat installtion
+# used: nginx installtion
 
