@@ -11,16 +11,16 @@ rootNess(){
 # Yum installtion
 yum_Ist(){
         echo "Start install system environmental science"
-	if [ "$0" -eq "keepalived.sh"  ]; then
+	if [ "$0" == "keepalived.sh"  ]; then
 		yum -y install gcc gc gcc-c++ libnl* libpopt* libnfnetlink-devel openssl openssl-devel > /dev/null
 		[ $? -eq 0 ] && echo "OK!!" && return 0 || return 1 && echo "You please installtion soft" && exit 1
-	elif [ "$0" -eq "lvs.sh"  ]; then
+	elif [ "$0" == "lvs.sh"  ]; then
         	yum -y install gcc gc gcc-c++ libnl* libpopt* popt-static popt-devel > /dev/null
         	[ $? -eq 0 ] && echo "OK!!" && return 0 || return 1 && echo "You please installtion soft" && exit 1
-	elif [ "$0" -eq "haproxy.sh"   ]; then
+	elif [ "$0" == "haproxy.sh"   ]; then
 		echo
 		[ $? -eq 0 ] && echo "OK!!" && return 0 || return 1 && echo "You please installtion soft" && exit 1
-	elif [ "$0" -eq "heartbeat.sh"  ]; then
+	elif [ "$0" == "heartbeat.sh"  ]; then
 		echo
 		[ $? -eq 0 ] && echo "OK!!" && return 0 || return 1 && echo "You please installtion soft" && exit 1
 	fi
