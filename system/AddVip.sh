@@ -2,7 +2,7 @@
 # author: yangzhaoyu time:2019-09-09
 # used add Vip
 
-VIP=()
+VIP=() # IP address to be added
 i=1
 for v in ${VIP[@]}; do
         if [ -f /etc/sysconfig/network-scripts/ifcfg-lo:${i} ]; then
@@ -17,4 +17,5 @@ for v in ${VIP[@]}; do
                 ifup lo:${i}
         fi
         let i++
-        [ $i -eq 11 ] && break
+        [ $i -eq  `expr ${#VIP[@]} + 1` ] && break
+done
