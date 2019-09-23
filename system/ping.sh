@@ -45,7 +45,7 @@ logs_ping(){
 
 # Email function
 ping_email(){
-	local array=(yangzhaoyu@zhibo.tv renqingsangbu@zhibo.tv xuwei@zhibo.tv peidaojun@zhibo.tv)
+	local array=() # E-mail address
 	for i in ${array[@]};do
 		if (( "$awk_time" == 0 )); then
 			echo " error:Check the network if it is disconnected!!! " | mail -s "network error" $i
